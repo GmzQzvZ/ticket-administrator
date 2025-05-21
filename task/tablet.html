@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Desk</title>
+  <link rel="stylesheet" href="CSS/tablet.css" />
+</head>
+<body>
+  <header class="header">
+    SERVICES DESK
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-icon">☰</div>
+      <div class="user">
+        <div class="avatar">👤</div>
+        <p>User name</p>
+      </div>
+      <nav class="nav">
+        <a href="#"><span>🏠</span> Inicio</a>
+        <a href="#"><span>🎧</span> Requerimientos</a>
+        <a href="#"><span>⚠️</span> Incidentes</a>
+        <a href="#"><span>📊</span> Estadísticas</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h2>Requerimientos</h2>
+        <button class="btn">Radicar caso</button>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No. Caso</th>
+            <th>Asunto</th>
+            <th>Fecha de registro</th>
+            <th>Estado</th>
+            <th>Cliente</th>
+            <th>Categoría</th>
+            <th>Servicio</th>
+            <th>Responsable</th>
+            <th>Autor</th>
+            <th>Razón</th>
+            <th>Prioridad</th>
+            <th>Fecha estimada de solución</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <th># 0976</th>
+            <th>Error de conexión</th>
+            <th>27/01/2023 12:30</th>
+            <th style="color: rgb(79, 189, 52);"><b>En progreso</b></th>
+            <th>Sede 001</th>
+            <th>Tecnogología</th>
+            <th>N/A</th>
+            <th>Soporte TI</th>
+            <th>Sergio</th>
+            <th>Error de conexión</th>
+            <th style="color: rgb(189, 52, 52);"><b>Alta</b></th>
+            <th>30/01/2023 12:30</th>
+            <th><button class="btn">Ver</button>
+                <button class="btn danger">Eliminar</button></th>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+  
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+    });
+  </script>
+  
+</body>
+</html>

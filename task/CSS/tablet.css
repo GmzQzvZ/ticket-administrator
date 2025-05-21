@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e9eeec;
+  }
+  
+  .header {
+    background-color: #9096a2;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+  
+  .layout {
+    display: flex;
+    height: calc(100vh - 60px);
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #505bdd;
+    color: white;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .menu-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .user {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 50%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+  }
+  
+  .nav a {
+    display: block;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    padding-left: 30px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .nav a:hover {
+    background-color: #3a45aa;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .top-bar h2 {
+    color: #5a5ad8;
+    font-weight: normal;
+  }
+  
+  .btn {
+    background-color: #5a5ad8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+  
+
+  btn danger {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+  .btn:hover {
+    background-color: #4750b8;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 0.85rem;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f5f5f5;
+    font-weight: normal;
+  }
+  
