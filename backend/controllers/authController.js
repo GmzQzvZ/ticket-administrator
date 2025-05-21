@@ -1,29 +1,41 @@
 const path = require('path');
-const { readJSON, writeJSON } = require('../utils/fileUtils');
+const { readData, writeData } = require('../utils/fileUtils');
 
 const usersPath = path.join(__dirname, '../data/users.json');
 
-async function registerUser(req, res) {
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ message: 'Faltan datos' });
+exports.register = async (req, res) => {
+  const { name, email, password } = req.body;
+  const users = await readData(usersPath);
 
-  const users = await readJSON(usersPath);
-  const exists = users.find(u => u.username === username);
-  if (exists) return res.status(409).json({ message: 'Usuario ya existe' });
+  if (users.find(u => u.email === email)) {
+    return res.status(400).json({ message: 'Usuario ya registrado.' });
+  }
 
-  users.push({ username, password });
-  await writeJSON(usersPath, users);
-  res.status(201).json({ message: 'Usuario registrado con éxito' });
-}
+  users.push({ name, email, password });
+  await writeData(usersPath, users);
+  res.status(201).json({ message: 'Usuario registrado con éxito.' });
+};
 
-async function loginUser(req, res) {
-  const { username, password } = req.body;
-  const users = await readJSON(usersPath);
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  const users = await readData(usersPath);
 
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) return res.status(401).json({ message: 'Credenciales inválidas' });
+  const user = users.find(u => u.email === email && u.password === password);
+  if (!user) {
+    return res.status(401).json({ message: 'Credenciales inválidas.' });
+  }
 
-  res.status(200).json({ message: 'Login exitoso' });
-}
+  res.json({ message: 'Login exitoso.', user });
+};
 
-module.exports = { registerUser, loginUser };
+exports.recoverPassword = async (req, res) => {
+  const { email } = req.body;
+  const users = await readData(usersPath);
+
+  const user = users.find(u => u.email === email);
+  if (!user) {
+    return res.status(404).json({ message: 'Correo no registrado.' });
+  }
+
+  res.json({ message: 'Contraseña recuperada.', password: user.password });
+};

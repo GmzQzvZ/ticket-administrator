@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <link rel="stylesheet" href="css/login.css">
     <meta charset="UTF-8">
@@ -11,49 +11,49 @@
       <div class="welcome-text">
         Welcome to <br /> Service Desk
       </div>
-  
+
       <div class="card">
         <label for="user">👤 User</label>
         <input type="text" id="user" placeholder="Username" />
-  
+
         <label for="password">🔓 Password</label>
         <input type="password" id="password" placeholder="Password" />
-  
+
         <div class="buttons">
-          <button href="Register.html" class="register">Register</button>
-          <button href="tablet.html" class="login">Login</button>
+          <button id="btn-register" class="register">Register</button>
+          <button id="btn-login" class="login">Login</button>
         </div>
-  
+
         <div class="forgot">
-          <a href="password.html">Forgot your password?</a>
+          <a href="password.html">¿Olvidaste tu contraseña?</a>
         </div>
       </div>
     </div>
-  </body>
+
+    <script>
+      // Botón de login
+      document.getElementById('btn-login').addEventListener('click', async (e) => {
+        const email = document.getElementById('user').value;
+        const password = document.getElementById('password').value;
+
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+
+        if (res.ok) {
+          window.location.href = 'tablet.html';
+        }
+      });
+
+      // Botón de registro
+      document.getElementById('btn-register').addEventListener('click', () => {
+        window.location.href = 'Register.html';
+      });
+    </script>
+</body>
 </html>
-<script>
-  
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  try {
-    const res = await fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-
-    const data = await res.json();
-    alert(data.message);
-
-    if (res.ok) {
-      window.location.href = 'tablet.html';
-    }
-  } catch (err) {
-    alert('Error de red o servidor');
-  }
-});
-</script>
