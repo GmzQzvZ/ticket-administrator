@@ -33,9 +33,24 @@ git clone https://github.com/tu_usuario/ticket-administrator.git:
 ```bash
 cd ticket-administrator
 ```
-3.Instala las dependencias:
+3. Instala las dependencias:
 ```
 npm install
-
 ```
+4. Inicia el servidor:
+```
+npm start
+```
+5. Abre tu navegador en:
+```
+http://localhost:3000/Login.html
+```
+6. Ahora puedes usar la aplicación para registrar, consultar y administrar tickets.
+---
+Funcionalidades principales
+-Registro y login de usuarios
+-Creación y administración de tickets
+-Visualización de tickets en tabla con detalles
+-Recuperación de contraseña
+-Guardado y lectura de datos en archivos JSON en backend
 
