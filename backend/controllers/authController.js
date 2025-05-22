@@ -18,21 +18,28 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  const users = await readData(usersPath);
 
-  const user = users.find(u => u.email === email && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: 'Credenciales inválidas.' });
+  if (!email || !password) {
+    return res.status(400).json({ message: "Todos los campos son obligatorios" });
   }
 
-  res.json({ message: 'Login exitoso.', user });
+  const users = await readData(usersPath);
+  const user = users.find((user) => user.email === email);
+
+  if (!user || user.password !== password) {
+    return res.status(401).json({ message: "Credenciales inválidas" });
+  }
+
+  res.json({ message: "Inicio de sesión exitoso" });
 };
+
+
 
 exports.recoverPassword = async (req, res) => {
   const { email } = req.body;
   const users = await readData(usersPath);
 
-  const user = users.find(u => u.email === email);
+ const user = users.find((user) => user.email === email);
   if (!user) {
     return res.status(404).json({ message: 'Correo no registrado.' });
   }
