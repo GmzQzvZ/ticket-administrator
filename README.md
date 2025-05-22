@@ -59,11 +59,11 @@ http://localhost:3000/Login.html
 ---
 
 ## Estructura del proyecto
-
+```
 /frontend       # Archivos y vistas del frontend (HTML, CSS, JS)
 /backend       # Código backend en Node.js
 /data          # Archivos JSON para almacenamiento
 README.md      # Este archivo
-
+```
 ---
 
