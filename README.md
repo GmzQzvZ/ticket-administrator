@@ -50,9 +50,20 @@ http://localhost:3000/Login.html
 
 ## Funcionalidades principales
 
--Registro y login de usuarios
--Creación y administración de tickets
--Visualización de tickets en tabla con detalles
--Recuperación de contraseña
--Guardado y lectura de datos en archivos JSON en backend
+- Registro y login de usuarios
+- Creación y administración de tickets
+- Visualización de tickets en tabla con detalles
+- Recuperación de contraseña
+- Guardado y lectura de datos en archivos JSON en backend
+
+---
+
+## Estructura del proyecto
+
+/frontend       # Archivos y vistas del frontend (HTML, CSS, JS)
+/backend       # Código backend en Node.js
+/data          # Archivos JSON para almacenamiento
+README.md      # Este archivo
+
+---
 
