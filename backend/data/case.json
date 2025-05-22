@@ -1,0 +1,30 @@
+[
+  {
+    "numero": "0976",
+    "asunto": "Error de conexión",
+    "fechaRegistro": "27/01/2023 12:30",
+    "estado": "En progreso",
+    "cliente": "Sede 001",
+    "categoria": "Tecnología",
+    "servicio": "N/A",
+    "responsable": "Soporte TI",
+    "autor": "Sergio",
+    "razon": "Error de conexión",
+    "prioridad": "Alta",
+    "fechaEstimada": "30/01/2023 12:30"
+  },
+  {
+    "numero": "0977",
+    "asunto": "Falla en impresora",
+    "fechaRegistro": "28/01/2023 09:00",
+    "estado": "Pendiente",
+    "cliente": "Sede 002",
+    "categoria": "Hardware",
+    "servicio": "Impresión",
+    "responsable": "Soporte TI",
+    "autor": "Daniela",
+    "razon": "Atasco de papel",
+    "prioridad": "Media",
+    "fechaEstimada": "02/02/2023 17:00"
+  }
+]

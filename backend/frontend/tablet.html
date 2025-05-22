@@ -13,17 +13,18 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <div class="menu-icon">☰</div>
       <div class="user">
-        <div class="avatar">👤</div>
-        <p>User name</p>
-      </div>
+    <div class="avatar">👤</div>
+    <p id="username">User name</p>
+    </div>
+
       <nav class="nav">
         <a href="#"><span>🏠</span> Inicio</a>
         <a href="#"><span>🎧</span> Requerimientos</a>
         <a href="#"><span>⚠️</span> Incidentes</a>
         <a href="#"><span>📊</span> Estadísticas</a>
       </nav>
+      <button id="btn-login" class="login">Cerrar sesión</button>
     </aside>
 
     <main class="main-content">
@@ -64,8 +65,9 @@
             <th>Error de conexión</th>
             <th style="color: rgb(189, 52, 52);"><b>Alta</b></th>
             <th>30/01/2023 12:30</th>
-            <th><button class="btn">Ver</button>
-                <button class="btn danger">Eliminar</button></th>
+            <th><button class="btn btn-view" data-case-id="0976">Ver</button>
+              <button class="btn danger">Eliminar</button>
+          </th>
           </tr>
         </tbody>
       </table>
@@ -73,13 +75,46 @@
   </div>
 
   <script>
+
+document.getElementById('btn-login').addEventListener('click', () => {
+        window.location.href = 'login.html';
+      });
+
     const toggleBtn = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
   
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('collapsed');
     });
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('user.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Error al cargar JSON');
+      return response.json();
+    })
+    .then(data => {
+      document.getElementById('username').textContent = data.username;
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById('username').textContent = 'Error cargando usuario';
+    });
+
+  document.querySelectorAll('.btn-view').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const caseId = btn.getAttribute('data-case-id');
+      window.location.href = `case.html?caseId=${caseId}`;
+    });
+  });
+});
+
+
   </script>
+
+
+
+
   
 </body>
 </html>

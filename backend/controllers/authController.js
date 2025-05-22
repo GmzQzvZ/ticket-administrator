@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     return res.status(401).json({ message: "Credenciales inválidas" });
   }
 
-  res.json({ message: "Inicio de sesión exitoso" });
+  
 };
 
 

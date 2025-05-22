@@ -2,81 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="CSS/case.css" />
-  <title>Radicar Caso</title>
+  <title>Detalle Caso</title>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="avatar">👤</div>
-      <p>User name</p>
-      <nav class="nav">
-        <a href="#"><span>🏠</span> Inicio</a>
-      </nav>
-    </aside>
 
-    <main class="form-container">
-      <h1>RADICAR CASO</h1>
-      <form class="case-form">
-        <label>Asunto <input type="text" /></label>
-        <label>Estado 
-          <select>
-            <option>Abierto</option>
-            <option>En progreso</option>
-            <option>Cerrado</option>
-          </select>
-        </label>
-        <label>Cliente 
-          <select>
-            <option>Sede 001</option>
-            <option>Sede 002</option>
-            <option>Sede 003</option>
-            <option>Sede 004</option>
-            <option>Sede 005</option>
-            <option>Externo</option>
-            <option>Otro</option>
-          </select>
-        </label>
-        <label>Categoría 
-          <select>
-            <option>tegnología</option>
-            <option>Soporte</option>
-            <option>Incidente</option>
-            <option>Requerimiento</option>
-            <option>Reclamo</option>
-            <option>Problema</option>
-            <option>Consulta</option>
-            <option>Petición</option>
-            <option>Problema</option>
-            <option>Consulta</option>
-            <option>Solicitud</option>
-            <option>Otro</option>
-          </select>
-        </label>
-        <label>Servicio <input type="text" /></label>
-        <label>Razón <input type="text" /></label>
-        <label>Prioridad 
-          <select>
-            <option>Baja</option>
-            <option>Media</option>
-            <option>Alta</option>
-        </select>
-        </label>
-        <label>Responsable
-            <select>
-            <option>tegnología</option>
-            <option>Soporte</option>
-            <option>Otro</option>
-        </select>
-        </label>
-        <label>Descripción 
-          <textarea rows="6"></textarea>
-        </label>
-        <label>Cargar archivos <input type="file" /></label>
-        <button type="submit">CREAR CASO</button>
-      </form>
-    </main>
+  <h1>Detalle del Caso</h1>
+  <div id="case-info">
+    Cargando...
   </div>
+
+  <script>
+    // Función para obtener parámetros URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const caseId = getQueryParam('caseId');
+
+    fetch('case.json')
+      .then(res => res.json())
+      .then(data => {
+        // data es un array o un objeto con casos, busca el que coincida con caseId
+        const caso = data.find(c => c.numero === caseId);
+        const container = document.getElementById('case-info');
+
+        if (caso) {
+          container.innerHTML = `
+            <p><strong>No. Caso:</strong> ${caso.numero}</p>
+            <p><strong>Asunto:</strong> ${caso.asunto}</p>
+            <p><strong>Fecha de registro:</strong> ${caso.fechaRegistro}</p>
+            <p><strong>Estado:</strong> ${caso.estado}</p>
+            <p><strong>Cliente:</strong> ${caso.cliente}</p>
+            <p><strong>Categoría:</strong> ${caso.categoria}</p>
+            <p><strong>Servicio:</strong> ${caso.servicio}</p>
+            <p><strong>Responsable:</strong> ${caso.responsable}</p>
+            <p><strong>Autor:</strong> ${caso.autor}</p>
+            <p><strong>Razón:</strong> ${caso.razon}</p>
+            <p><strong>Prioridad:</strong> ${caso.prioridad}</p>
+            <p><strong>Fecha estimada de solución:</strong> ${caso.fechaEstimada}</p>
+          `;
+        } else {
+          container.textContent = 'Caso no encontrado';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('case-info').textContent = 'Error cargando el caso';
+      });
+  </script>
+
 </body>
 </html>
