@@ -47,14 +47,12 @@ http://localhost:3000/Login.html
 ```
 6. Ahora puedes usar la aplicación para registrar, consultar y administrar tickets.
 ---
-Funcionalidades principales
+
+## Funcionalidades principales
+
 -Registro y login de usuarios
-
 -Creación y administración de tickets
-
 -Visualización de tickets en tabla con detalles
-
 -Recuperación de contraseña
-
 -Guardado y lectura de datos en archivos JSON en backend
 
