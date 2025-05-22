@@ -26,4 +26,16 @@
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu_usuario/ticket-administrator.git
+git clone https://github.com/tu_usuario/ticket-administrator.git:
+```
+2. Clona el repositorio:
+
+```bash
+cd ticket-administrator
+```
+3.Instala las dependencias:
+```
+npm install
+
+```
+
