@@ -27,6 +27,7 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+.qodo
 
 # Otros
 git_comandos_ejemplo.txt
