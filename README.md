@@ -21,33 +21,6 @@
 
 ---
 
-## Instalación
-
-1. Clona el repositorio:
-
-```bash
-git clone https://github.com/tu_usuario/ticket-administrator.git:
-```
-2. Clona el repositorio:
-
-```bash
-cd ticket-administrator
-```
-3. Instala las dependencias:
-```
-npm install
-```
-4. Inicia el servidor:
-```
-npm start
-```
-5. Abre tu navegador en:
-```
-http://localhost:3000/Login.html
-```
-6. Ahora puedes usar la aplicación para registrar, consultar y administrar tickets.
----
-
 ## Funcionalidades principales
 
 - Registro y login de usuarios
@@ -59,11 +32,12 @@ http://localhost:3000/Login.html
 ---
 
 ## Estructura del proyecto
-```
-/frontend       # Archivos y vistas del frontend (HTML, CSS, JS)
-/backend       # Código backend en Node.js
-/data          # Archivos JSON para almacenamiento
-README.md      # Este archivo
-```
----
 
+```bash
+/frontend       # Archivos y vistas del frontend (HTML, CSS, JS)
+/backend        # Código backend en Node.js
+/data           # Archivos JSON para almacenamiento
+README.md       # Este archivo
+```
+
+---
