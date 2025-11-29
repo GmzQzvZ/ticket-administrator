@@ -12,8 +12,8 @@
   </header>
 
   <div class="layout">
-    <aside class="sidebar">
-      <div class="menu-icon">☰</div>
+    <aside class="sidebar" id="sidebar">
+      <button class="menu-icon" id="menu-toggle">☰</button>
       <div class="user">
         <div class="avatar">👤</div>
         <p>User name</p>
@@ -29,7 +29,7 @@
     <main class="main-content">
       <div class="top-bar">
         <h2>Requerimientos</h2>
-        <button class="btn">Radicar caso</button>
+        <button class="btn" id="btn-case">Radicar caso</button>
       </div>
 
       <table class="table">
@@ -75,10 +75,19 @@
   <script>
     const toggleBtn = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
-  
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-    });
+    const caseBtn = document.getElementById('btn-case');
+
+    if (toggleBtn && sidebar) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+      });
+    }
+
+    if (caseBtn) {
+      caseBtn.addEventListener('click', () => {
+        window.location.href = 'case.html';
+      });
+    }
   </script>
   
 </body>

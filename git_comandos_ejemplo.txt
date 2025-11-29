@@ -1,0 +1,64 @@
+# Ejemplo de flujo de comandos Git para este proyecto
+
+# 1. Clonar el repositorio (desde GitHub u otro remoto)
+ git clone https://github.com/tu_usuario/ticket-administrator.git
+ cd ticket-administrator
+
+# 2. Ver el estado actual del repositorio
+ git status
+
+# 3. Crear y cambiar a una nueva rama de desarrollo
+ git branch feature/mejoras-auth-frontend
+ git checkout feature/mejoras-auth-frontend
+#  (alternativa en un solo paso)
+# git checkout -b feature/mejoras-auth-frontend
+
+# 4. Ver el historial de commits
+ git log --oneline --graph --decorate --all
+
+# 5. Añadir archivos modificados al área de preparación (staging)
+ git add backend/frontend/Login.html
+ git add backend/frontend/Register.html
+ git add backend/frontend/password.html
+ git add backend/frontend/tablet.html
+ git add package.json
+ git add git_comandos_ejemplo.txt
+
+#  (para añadir todo de golpe)
+# git add .
+
+# 6. Crear un commit con mensaje descriptivo
+ git commit -m "Mejorar flujo de autenticación y navegación frontend"
+
+# 7. Comprobar el estado tras el commit
+ git status
+
+# 8. Configurar un remoto (si no existe) o añadir otro
+ git remote add origin https://github.com/tu_usuario/ticket-administrator.git
+
+# 9. Ver los remotos configurados
+ git remote -v
+
+# 10. Enviar la rama actual al remoto
+ git push -u origin feature/mejoras-auth-frontend
+
+# 11. Volver a la rama principal (ej: main) cuando sea necesario
+ git checkout main
+
+# 12. Fusionar la rama de feature en main (desde main)
+ git merge feature/mejoras-auth-frontend
+
+# 13. Ignorar archivos y carpetas con .gitignore (ejemplo típico para Node.js)
+#   Crear o editar el archivo .gitignore con contenido como:
+#   node_modules/
+#   .env
+#   logs/
+
+# 14. Después de modificar .gitignore, confirmarlo también
+ git add .gitignore
+ git commit -m "Configurar .gitignore para proyecto Node.js"
+
+# 15. Enviar los últimos cambios de main al remoto
+ git push origin main
+
+git commit -m ""

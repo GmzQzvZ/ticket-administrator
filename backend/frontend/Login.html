@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="CSS/login.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Desk</title>
@@ -31,6 +31,43 @@
     </div>
 
     <script>
+      const userInput = document.getElementById('user');
+      const passwordInput = document.getElementById('password');
+
+      function validateFields() {
+        if (!userInput.value || !passwordInput.value) {
+          alert('Todos los campos son obligatorios');
+          return false;
+        }
+        return true;
+      }
+
+      // Botón de login
+      document.getElementById('btn-login').addEventListener('click', async (e) => {
+        if (!validateFields()) return;
+
+        const email = userInput.value;
+        const password = passwordInput.value;
+
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+
+        if (res.ok) {
+          window.location.href = 'tablet.html';
+        }
+      });
+
+      // Botón de registro
+      document.getElementById('btn-register').addEventListener('click', () => {
+        window.location.href = 'Register.html';
+      });
+    </script>
       // Botón de login
       document.getElementById('btn-login').addEventListener('click', async (e) => {
         const email = document.getElementById('user').value;
