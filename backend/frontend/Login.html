@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Desk</title>
+</head>
+<body>
+    <div class="container">
+      <div class="welcome-text">
+        Welcome to <br /> Service Desk
+      </div>
+
+      <div class="card">
+        <label for="user">👤 User</label>
+        <input type="text" id="user" placeholder="Username" />
+
+        <label for="password">🔓 Password</label>
+        <input type="password" id="password" placeholder="Password" />
+
+        <div class="buttons">
+          <button id="btn-register" class="register">Register</button>
+          <button id="btn-login" class="login">Login</button>
+        </div>
+
+        <div class="forgot">
+          <a href="password.html">¿Olvidaste tu contraseña?</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Botón de login
+      document.getElementById('btn-login').addEventListener('click', async (e) => {
+        const email = document.getElementById('user').value;
+        const password = document.getElementById('password').value;
+
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+
+        if (res.ok) {
+          window.location.href = 'tablet.html';
+        }
+      });
+
+      // Botón de registro
+      document.getElementById('btn-register').addEventListener('click', () => {
+        window.location.href = 'Register.html';
+      });
+    </script>
+</body>
+</html>

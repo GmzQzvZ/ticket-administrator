@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Desk - Registro</title>
+</head>
+<body>
+  <div class="container">
+    <div class="welcome-text">
+      Welcome to <br /> Register
+    </div>
+
+    <div class="card">
+      <form id="registerForm">
+        <label for="name">👤 Name</label>
+        <input type="text" id="name" placeholder="Name" required />
+
+        <label for="email">📧 Email</label>
+        <input type="email" id="email" placeholder="Email" required />
+
+        <label for="password">🔓 Password</label>
+        <input type="password" id="password" placeholder="Password" required />
+
+        <div class="buttons">
+          <button type="submit" class="register">Register</button>
+        </div>
+      </form>
+
+      <div class="forgot">
+        <a href="Login.html">¿Ya tienes cuenta? Inicia sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+
+        if (res.ok) {
+          window.location.href = 'Login.html';
+        }
+      } catch (err) {
+        alert('Error de red o servidor');
+      }
+    });
+  </script>
+</body>
+</html>
