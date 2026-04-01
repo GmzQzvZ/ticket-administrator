@@ -1,14 +1,19 @@
 {
-  "name": "desarollo-de-aplicaciones-we",
+  "name": "ticket-administrator",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "API de autenticación ligera para administrar tickets de soporte.",
+  "main": "backend/server.js",
   "scripts": {
+    "start": "node backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "tickets",
+    "express",
+    "soporte"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^5.1.0"
   }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Desk</title>
+  <link rel="stylesheet" href="CSS/tablet.css" />
+</head>
+<body>
+  <header class="header">
+    SERVICES DESK
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-icon">✶</div>
+      <div class="user">
+        <div class="avatar">👤</div>
+        <p>User name</p>
+      </div>
+      <nav class="nav">
+        <a href="#"><span>🏠</span> Inicio</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h2>Requerimientos</h2>
+        <button class="btn" id="btn-radicar-caso">Radicar caso</button>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No. Caso</th>
+            <th>Asunto</th>
+            <th>Fecha de registro</th>
+            <th>Estado</th>
+            <th>Cliente</th>
+            <th>Categoría</th>
+            <th>Servicio</th>
+            <th>Responsable</th>
+            <th>Autor</th>
+            <th>Razón</th>
+            <th>Prioridad</th>
+            <th>Fecha estimada de solución</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tickets-body"></tbody>
+      </table>
+    </main>
+  </div>
+
+  <script>
+    const statusColors = {
+      'En progreso': 'rgb(79, 189, 52)',
+      Abierto: '#2563eb',
+      Cerrado: '#6b7280',
+      Pendiente: '#f97316',
+    };
+
+    const formatDate = (value) => {
+      if (!value) return '—';
+      const date = new Date(value);
+      return `${date.toLocaleDateString('es-CO')} ${date.toLocaleTimeString('es-CO', {
+        hour: '2-digit',
+        minute: '2-digit',
+      })}`;
+    };
+
+    const buildRows = (tickets) =>
+      tickets
+        .map(
+          (ticket) => `
+            <tr>
+              <td># ${ticket.caseNumber}</td>
+              <td>${ticket.subject}</td>
+              <td>${formatDate(ticket.createdAt)}</td>
+              <td style="color: ${statusColors[ticket.status] || '#0f172a'};"><b>${ticket.status}</b></td>
+              <td>${ticket.client}</td>
+              <td>${ticket.category}</td>
+              <td>${ticket.service}</td>
+              <td>${ticket.responsible}</td>
+              <td>${ticket.author}</td>
+              <td>${ticket.reason}</td>
+              <td>${ticket.priority}</td>
+              <td>${formatDate(ticket.eta)}</td>
+            <td>
+                <button class="btn btn-view" data-case="${ticket.caseNumber}">Ver</button>
+                <button class="btn btn-danger btn-delete" data-case="${ticket.caseNumber}">Eliminar</button>
+              </td>
+          </tr>
+          `
+        )
+        .join('');
+
+    let ticketsCache = [];
+
+    const loadTickets = async () => {
+      const body = document.getElementById('tickets-body');
+      try {
+        const response = await fetch('/api/data/tickets');
+        if (!response.ok) throw new Error('No se pudo cargar');
+        const tickets = await response.json();
+        ticketsCache = tickets;
+        body.innerHTML = buildRows(tickets);
+      } catch (error) {
+        body.innerHTML = '<tr><td colspan="13">No se pudieron cargar los requerimientos.</td></tr>';
+      }
+    };
+
+    loadTickets();
+
+    document
+      .getElementById('btn-radicar-caso')
+      .addEventListener('click', () => {
+        window.location.href = 'case.html';
+      });
+
+      document.getElementById('tickets-body').addEventListener('click', async (event) => {
+        const viewBtn = event.target.closest('.btn-view');
+        const deleteBtn = event.target.closest('.btn-delete');
+        if (viewBtn) {
+          const caseNumber = viewBtn.dataset.case;
+          const ticket = ticketsCache.find((item) => item.caseNumber === caseNumber);
+          if (ticket) {
+            sessionStorage.setItem('ticketToEdit', JSON.stringify(ticket));
+            window.location.href = 'case.html';
+          }
+          return;
+        }
+
+      if (deleteBtn) {
+        const caseNumber = deleteBtn.dataset.case;
+        if (!confirm(`¿Eliminar caso #${caseNumber}? Esta acción no se puede deshacer.`)) {
+          return;
+        }
+
+        const response = await fetch(`/api/tickets/${caseNumber}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          ticketsCache = ticketsCache.filter((item) => item.caseNumber !== caseNumber);
+          deleteBtn.closest('tr')?.remove();
+        } else {
+          alert('No se pudo eliminar el caso.');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

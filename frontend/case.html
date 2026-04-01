@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="CSS/case.css" />
+  <title>Radicar Caso</title>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="avatar">👤</div>
+      <p>User name</p>
+      <nav class="nav">
+        <a href="#"><span>🏠</span> Inicio</a>
+      </nav>
+    </aside>
+
+    <main class="form-container">
+      <h1>RADICAR CASO</h1>
+      <form class="case-form">
+        <label>
+          Asunto
+          <input type="text" id="case-subject" />
+        </label>
+        <label>
+          Estado
+          <select id="case-status" data-source="statuses">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Cliente
+          <select id="case-client" data-source="clients">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Categoría
+          <select id="case-category" data-source="categories">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Servicio
+          <select id="case-service" data-source="services">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Razón
+          <input type="text" id="case-reason" />
+        </label>
+        <label>
+          Prioridad
+          <select id="case-priority" data-source="priorities">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Responsable
+          <select id="case-responsible" data-source="responsibles">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Descripción
+          <textarea id="case-description" rows="6"></textarea>
+        </label>
+        <input type="hidden" id="case-number" />
+        <div class="action-row" style="display:flex; gap:0.75rem;">
+          <button type="submit">CREAR CASO</button>
+          <button type="button" id="cancel-case">Cancelar / Volver</button>
+        </div>
+        <p id="case-feedback" class="status" aria-live="polite" style="margin-top:0.75rem;"></p>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const selectConfigs = [
+      { selector: '#case-status', endpoint: 'statuses' },
+      { selector: '#case-client', endpoint: 'clients' },
+      { selector: '#case-category', endpoint: 'categories' },
+      { selector: '#case-service', endpoint: 'services' },
+      { selector: '#case-priority', endpoint: 'priorities' },
+      { selector: '#case-responsible', endpoint: 'responsibles' },
+    ];
+    const caseNumberInput = document.getElementById('case-number');
+    let editingCaseNumber = null;
+
+    const fillSelect = (config) => {
+      const select = document.querySelector(config.selector);
+      if (!select) return Promise.resolve(null);
+
+      return fetch(`/api/data/${config.endpoint}`)
+        .then((response) => {
+          if (!response.ok) throw new Error('No response');
+          return response.json();
+        })
+        .then((data) => {
+          const options = data
+            .map((item) => {
+              if (typeof item === 'object') {
+                const text = item.name || item.label || item.id || JSON.stringify(item);
+                const value = item.id || item.name || item.label || text;
+                return `<option value="${value}">${text}</option>`;
+              }
+              return `<option value="${item}">${item}</option>`;
+            })
+            .join('');
+
+          select.innerHTML = `<option value="">Seleccione</option>${options}`;
+          return select;
+        })
+        .catch(() => {
+          select.innerHTML = '<option value="">Error cargando datos</option>';
+          return null;
+        });
+    };
+
+    const applySelects = () => Promise.all(selectConfigs.map(fillSelect));
+
+    const applyPrefill = () => {
+      const stored = sessionStorage.getItem('ticketToEdit');
+      if (!stored) return;
+      const ticket = JSON.parse(stored);
+      document.getElementById('case-subject').value = ticket.subject || '';
+      document.getElementById('case-reason').value = ticket.reason || '';
+      document.getElementById('case-description').value = ticket.description || '';
+      ['status', 'client', 'category', 'service', 'priority', 'responsible'].forEach((field) => {
+        const element = document.getElementById(`case-${field}`);
+        if (element) {
+          element.value = ticket[field] || '';
+        }
+      });
+      document.getElementById('case-feedback').textContent = 'Editando caso ' + ticket.caseNumber;
+      editingCaseNumber = ticket.caseNumber;
+      if (caseNumberInput) {
+        caseNumberInput.value = editingCaseNumber;
+      }
+      sessionStorage.removeItem('ticketToEdit');
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await applySelects();
+      applyPrefill();
+    });
+
+    document.getElementById('cancel-case').addEventListener('click', () => {
+      window.location.href = 'tablet.html';
+    });
+
+    document.querySelector('.case-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const feedback = document.getElementById('case-feedback');
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      feedback.textContent = 'Guardando caso...';
+
+      const payload = {
+        subject: document.getElementById('case-subject').value.trim(),
+        status: document.getElementById('case-status').value,
+        client: document.getElementById('case-client').value,
+        category: document.getElementById('case-category').value,
+        service: document.getElementById('case-service').value,
+        responsible: document.getElementById('case-responsible').value,
+        priority: document.getElementById('case-priority').value,
+        reason: document.getElementById('case-reason').value.trim(),
+        description: document.getElementById('case-description').value.trim(),
+      };
+
+      try {
+      const isEdit = Boolean(editingCaseNumber);
+      const response = await fetch(`/api/tickets${isEdit ? '/' + editingCaseNumber : ''}`, {
+        method: isEdit ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.message || 'No se pudo guardar el caso.');
+        }
+
+        const ticket = await response.json();
+        feedback.textContent = `Caso ${ticket.caseNumber} ${isEdit ? 'actualizado' : 'creado'}. Redirigiendo...`;
+        setTimeout(() => {
+          window.location.href = 'tablet.html';
+        }, 1200);
+      } catch (error) {
+        feedback.textContent = error.message;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

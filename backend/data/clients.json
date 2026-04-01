@@ -1,0 +1,7 @@
+[
+  { "id": "sede-001", "name": "Sede 001 - Bogotá", "location": "Bogotá" },
+  { "id": "sede-002", "name": "Sede 002 - Medellín", "location": "Medellín" },
+  { "id": "sede-003", "name": "Sede 003 - Cali", "location": "Cali" },
+  { "id": "sede-004", "name": "Sede 004 - Barranquilla", "location": "Barranquilla" },
+  { "id": "externo", "name": "Cliente externo", "location": "Remoto" }
+]

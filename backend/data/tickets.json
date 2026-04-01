@@ -1,0 +1,18 @@
+[
+  {
+    "caseNumber": "C0001",
+    "subject": "prueba de guardado",
+    "createdAt": "2026-04-01T00:05:57.463Z",
+    "status": "Pendiente",
+    "client": "sede-001",
+    "category": "Soporte",
+    "service": "Soporte remoto",
+    "responsible": "Desarrollo",
+    "author": "Usuario local",
+    "reason": "prueba de guardado desde el formuilario",
+    "priority": "Media",
+    "description": "prueba de consecuitivo",
+    "eta": "2026-04-04T00:05:57.463Z",
+    "updatedAt": "2026-04-01T00:06:11.377Z"
+  }
+]
